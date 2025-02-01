@@ -1,28 +1,23 @@
 // Question::
+/*
+You have a material with n temperature levels. You know that there exists a critical temperature f where 
+0 <= f <= n such that the material will react or change its properties at temperatures higher than f but 
+remain unchanged at or below f.
+Rules:
+ You can measure the material's properties at any temperature level once.
+ If the material reacts or changes its properties, you can no longer use it for further measurements.
+ If the material remains unchanged, you can reuse it for further measurements.
+Goal:
+Determine the minimum number of measurements required to find the critical temperature.
+Input:
+ k: The number of identical samples of the material.
+ n: The number of temperature levels.
+Output:
+ The minimum number of measurements required to find the critical temperature
+*/
 
-// You have a material with n temperature levels. You know that there exists a critical temperature f where 
-// 0 <= f <= n such that the material will react or change its properties at temperatures higher than f but 
-// remain unchanged at or below f.
-// Rules:
-//  You can measure the material's properties at any temperature level once.
-//  If the material reacts or changes its properties, you can no longer use it for further measurements.
-//  If the material remains unchanged, you can reuse it for further measurements.
-// Goal:
-// Determine the minimum number of measurements required to find the critical temperature.
-// Input:
-//  k: The number of identical samples of the material.
-//  n: The number of temperature levels.
-// Output:
-//  The minimum number of measurements required to find the critical temperature
 
-
-
-// working of code ""
-
-// 
-//code
-
-public class Q1_a {
+public class A {
     // making a static function which takes two inputs k and n where k is the number of same material's small part
     // and n is the number of temperatures
 
@@ -37,7 +32,6 @@ public class Q1_a {
     // If the material reacts, ( f ) is in the range ( [0, x-1] ).
     // If the material does not react, ( f ) is in the range ( [x, j] ).
     // Thus, the relation can be expressed as: worstCase = Math.max(dp[i - 1][x - 1], dp[i][j - x]); Where:
-
     // ( dp[i-1][x-1] ) is the case where the material reacts (we lose one sample).
     // ( dp[i][j-x] ) is the case where the material does not react (we still have all samples).
     // Base Cases
@@ -74,9 +68,9 @@ public class Q1_a {
     }
 
     public static void main(String[] args) {
-        System.out.println(minMeasurements(1, 2));  // Output: 2
-        System.out.println(minMeasurements(2, 6));  // Output: 3
-        System.out.println(minMeasurements(3, 14)); // Output: 4
+        System.out.println(minMeasurements(1, 2));  
+        System.out.println(minMeasurements(2, 6));  
+        System.out.println(minMeasurements(3, 14)); 
     }
 
     /* Inputs: 1,2   output: 2 */
