@@ -1,4 +1,4 @@
-public class B {
+public class q1B {
 
     public static int findKthSmallest(int[] arr1, int[] arr2, int k) {
         int len1 = arr1.length;
