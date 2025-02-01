@@ -1,3 +1,5 @@
+
+
 // Question::
 /*
 You have a material with n temperature levels. You know that there exists a critical temperature f where 
@@ -17,7 +19,7 @@ Output:
 */
 
 
-public class A {
+public class q1A {
     // making a static function which takes two inputs k and n where k is the number of same material's small part
     // and n is the number of temperatures
 

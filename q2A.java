@@ -1,4 +1,4 @@
-public class q1A {
+public class q2A {
 
     public static void main(String[] args) {
         int totalEmployees = 100;
