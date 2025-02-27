@@ -1,52 +1,65 @@
-public class q1B {
+import java.util.Arrays;
 
-    public static int findKthSmallest(int[] arr1, int[] arr2, int k) {
-        int len1 = arr1.length;
-        int len2 = arr2.length;
+// A straightforward solution to obtain the kth lowest combined return from two sorted arrays of investment returns requires generating complete products
+//  between the arrays. A new array holds the results of multiplying all first and second array elements against each other. 
+//  After generating all the products we must perform a sorting operation to arrange the products in ascending order. 
+//  The sorted array enables straightforward access of the kth smallest product through its index at k - 1 because array counting starts at one. 
+//  The approach remains simple to execute with smaller datasets but it becomes less favorable for more extensive data because sorting operation
+//  s demand increased processing time.
 
-        // Ensure arr1 is the smaller array
-        if (len1 > len2) {
-            return findKthSmallest(arr2, arr1, k);
-        }
+// Step-by-Step Approach:
+// The first step initializes two sorted arrays named returns1 and returns2 containing investment returns.
 
-        int left = 0, right = len1;
+// Make a products Array to store potential results obtained by multiplying elements from returns1 and returns2.
 
-        while (left < right) {
-            int partition1 = (left + right) / 2;
-            int partition2 = k - partition1;
+// The generation of all possible products uses nested loops to process each element from returns1 and returns2 while saving each product within the products array.
 
-            // If partition2 is out of bounds, set to -infinity or +infinity
-            int maxLeft1 = (partition1 == 0) ? Integer.MIN_VALUE : arr1[partition1 - 1];
-            int minRight1 = (partition1 == len1) ? Integer.MAX_VALUE : arr1[partition1];
+// The Products Array needs to be sorted in ascending order after product generation to produce a proper smallest-to-largest arrangement of products.
 
-            int maxLeft2 = (partition2 == 0) ? Integer.MIN_VALUE : arr2[partition2 - 1];
-            int minRight2 = (partition2 == len2) ? Integer.MAX_VALUE : arr2[partition2];
+// Return the element at the k - 1 index from the sorted products array to obtain the kth smallest product functionally.
 
-            // Check if we have found the correct partitions
-            if (maxLeft1 <= minRight2 && maxLeft2 <= minRight1) {
-                return Math.max(maxLeft1, maxLeft2);
-            } else if (maxLeft1 > minRight2) {
-                // Move towards the left in arr1
-                right = partition1;
-            } else {
-                // Move towards the right in arr1
-                left = partition1 + 1;
+// To deliver the kth smallest product the algorithm will show it both by printing or by returning it through the final result.
+
+// The solution implements fundamental array operations which produce the necessary outcome through an easy-to-follow process.
+
+public class q1B{
+
+    public static int kthLowestCombinedReturn(int[] returns1, int[] returns2, int k) {
+        // Step 1: Create an array to hold all possible products
+        int n = returns1.length;
+        int m = returns2.length;
+        int[] products = new int[n * m]; // Array to store products
+        int index = 0; // Index for products array
+
+        // Step 2: Generate all possible products
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                products[index++] = returns1[i] * returns2[j]; // Calculate product and store it
             }
         }
 
-        // If we exit the loop, it means we found the kth element
-        return -1; // This line should never be reached if inputs are valid
+        // Step 3: Sort the products array
+        Arrays.sort(products); // Sort the array to find the kth smallest product
+
+        // Step 4: Return the kth smallest product
+        // k is 1-based, so we return products[k - 1]
+        return products[k - 1];
     }
 
     public static void main(String[] args) {
-        int[] arr1 = {2, 5};
-        int[] arr2 = {3, 4};
+        // Example 1
+        int[] returns1 = {2, 5};
+        int[] returns2 = {3, 4};
         int k = 2;
-        System.out.println(findKthSmallest(arr1, arr2, k)); // Output: 4
+        int output1 = kthLowestCombinedReturn(returns1, returns2, k);
+        System.out.println(output1);  // Expected Output: 8
 
-        int[] arr3 = {-4, -2, 0, 3};
-        int[] arr4 = {2, 4};
+        // Example 2
+        int[] returns1_2 = {-4, -2, 0, 3};
+        int[] returns2_2 = {2, 4};
         k = 6;
-        System.out.println(findKthSmallest(arr3, arr4, k)); // Output: 4
+        int output2 = kthLowestCombinedReturn(returns1_2, returns2_2, k);
+        System.out.println(output2);  // Expected Output: 0
     }
 }
+  
