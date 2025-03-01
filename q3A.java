@@ -86,3 +86,11 @@ The totalCost variable holds the minimum value required for complete device conn
         System.out.println("Minimum total cost: " + result); // Expected Output: 3
     }
 }
+//input:
+// n = 3
+// modules = {1, 2, 2}
+// connections = {{1, 2, 1}, {2, 3, 1}}
+// Output:
+// Minimum total cost: 3
+// Expected Output:
+// Minimum total cost: 3

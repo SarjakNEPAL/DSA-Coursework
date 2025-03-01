@@ -86,3 +86,14 @@ public class q2A {
         System.out.println("Total rewards needed: " + minRewards(ratings2)); // Output: 4
     }
 }
+
+// Output:
+// Total rewards needed: 5
+// Total rewards needed: 4
+// Expected Output:
+// Total rewards needed: 5
+// Total rewards needed: 4
+// Explanation:
+// In the first example, the minimum rewards needed are [1, 0, 2] = 5.
+// In the second example, the minimum rewards needed are [1, 2, 2] = 4.
+

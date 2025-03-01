@@ -131,3 +131,11 @@ public class Q6B {
         System.out.println("Crawled URL: " + url + " | Content Length: " + content.length());
     }
 }
+// Output:
+// Crawled URL: https://google.com | Content Length: 583789
+// Crawled URL: https://youtube.com | Content Length: 21354
+// Crawling completed. Total pages crawled: 2
+// Expected Output:
+// Crawled URL: https://google.com | Content Length: 583789
+// Crawled URL: https://youtube.com | Content Length: 21354
+// Crawling completed. Total pages crawled: 2

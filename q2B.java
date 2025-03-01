@@ -72,3 +72,10 @@ The function should return closest_pair after checking all pairs.*/
         System.out.println("Closest pair of indices: [" + result[0] + ", " + result[1] + "]"); // Expected Output: [0, 3]
     }
 }
+//input:
+// x_coords = {1, 2, 3, 2, 4};
+// y_coords = {2, 3, 1, 2, 3};
+// Output:
+// Closest pair of indices: [0, 3]
+// Expected Output:
+// Closest pair of indices: [0, 3]

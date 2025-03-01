@@ -132,3 +132,25 @@ public class Q4B {
         }
     }
 }
+// Input:
+// packages1 = {1, 0, 0, 0, 0, 1}
+// roads1 = {{0, 1}, {1, 2}, {2, 3}, {3, 4}, {4, 5}}
+//output:
+// Minimum roads to traverse: 4
+// Graph representation:
+// Location 0 is connected to: [1]   
+// Location 1 is connected to: [0, 2]
+// Location 2 is connected to: [1, 3]
+// Location 3 is connected to: [2, 4]
+// Location 4 is connected to: [3, 5]
+// Location 5 is connected to: [4]   
+// Minimum roads to traverse: 4      
+// Graph representation:
+// Location 0 is connected to: [1, 2]
+// Location 1 is connected to: [0, 3, 4]
+// Location 2 is connected to: [0, 5]
+// Location 3 is connected to: [1]
+// Location 4 is connected to: [1]
+// Location 5 is connected to: [2, 6, 7]
+// Location 6 is connected to: [5]
+// Location 7 is connected to: [5]

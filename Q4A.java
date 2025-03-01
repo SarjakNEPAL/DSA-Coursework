@@ -117,3 +117,19 @@ public class Q4A {
         System.out.println("+-------------+---------+");
     }
 }
+// Output:
+// +-------------+---------+
+// |   HASHTAG   |  COUNT  |
+// +-------------+---------+
+// | #HappyDay   | 3       |
+// | #TechLife   | 2       |
+// | #ProductiveDay | 1    |
+// +-------------+---------+
+// Expected Output:
+// +-------------+---------+
+// |   HASHTAG   |  COUNT  |
+// +-------------+---------+
+// | #HappyDay   | 3       |
+// | #TechLife   | 2       |
+// | #ProductiveDay | 1    |
+// +-------------+---------+

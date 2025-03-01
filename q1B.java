@@ -63,3 +63,19 @@ public class q1B{
     }
 }
   
+/*
+Input:
+
+returns1 = {2, 5};
+returns2 = {3, 4};
+k = 2;
+output: 8
+
+returns1_2 = {-4, -2, 0, 3};
+returns2_2 = {2, 4};
+k = 6;
+output:0
+
+ * 
+ * 
+ */

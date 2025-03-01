@@ -365,3 +365,17 @@ class GraphPanel extends JPanel {
         }
     }
 }
+
+//input
+// added nodes a,b,c
+// added edge a-b with cost 5 and bandwidth 10
+// added edge b-c with cost 3 and bandwidth 5
+// added edge a-c with cost 7 and bandwidth 15
+// optimized network
+// calculated path from a to c
+//output
+// Minimum Spanning Tree Edges:
+// b (Cost: 3)
+// a (Cost: 5)
+// Shortest Path:
+// a -> b -> c
