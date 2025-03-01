@@ -1,5 +1,6 @@
 public class q2B {
     /* Detailed Approach:
+    brute-force approach is used on this algotithm
     A nested loop system will determine the lexicographically smallest pair of point indices that demonstrate minimum Manhattan distance in a 2D plane by calculating distance between every pair of points. The Manhattan distance measures the distance between two points ((x_i, y_i)) and ((x_j, y_j)) through equation:
 
     

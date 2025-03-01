@@ -3,6 +3,9 @@ import java.util.*;
 public class q3A {
 /*
  * Detailed Approach:
+ * 
+ * The algorithm used in the provided Java code is a variation of the Minimum Spanning Tree (MST) algorithm known as Kruskal's algorithm.
+ * 
 The network needs a solution which uses_minimum expenses by applying direct device connection costs while handling
  expenses of module installation on network devices. The network requires a solution that identifies cost-effective methods for device
   communication that includes direct connections or module installation.

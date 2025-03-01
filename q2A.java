@@ -1,6 +1,6 @@
 public class q2A {
     // Detailed Approach:
-    // A two-pass algorithm enables the determination of employee reward requirements according to their performance ratings.
+    // A two-pass greedy algorithm algorithm enables the determination of employee reward requirements according to their performance ratings.
     //  Every staff member needs at least one prize and workers whose performance ratings surpass those of their peer employees will get additional prizes.
     
     // The beginning stage creates an array named rewards which matches ratings array size and fills each entry with value 1. 

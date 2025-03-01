@@ -4,6 +4,7 @@
  * that print the respective numbers. The most significant problem is handling three threads such that they print in the correct order without any race 
  * conditions. To achieve this, we use synchronization techniques in Java. The approach is to use a lock object to synchronize access to shared resources 
  * and boolean flags to know whose turn it is to print. This will make the threads wait for their turn and print the numbers in the desired order.
+ *WE USE MULTI THREADING HERE
  */
 
 /*

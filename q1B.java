@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-// A straightforward solution to obtain the kth lowest combined return from two sorted arrays of investment returns requires generating complete products
+// A straightforward(brute force) solution to obtain the kth lowest combined return from two sorted arrays of investment returns requires generating complete products
 //  between the arrays. A new array holds the results of multiplying all first and second array elements against each other. 
 //  After generating all the products we must perform a sorting operation to arrange the products in ascending order. 
 //  The sorted array enables straightforward access of the kth smallest product through its index at k - 1 because array counting starts at one. 

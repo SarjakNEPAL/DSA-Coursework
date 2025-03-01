@@ -1,58 +1,37 @@
-import java.util.*; // Import necessary Java utilities, including collections like List and Map.
+import java.util.*;
+/*The algorithm uses a HashMap for managing hashtag count storage operations.
+ A HashMap enables quick insertion and retrieval operations which speeds up the counting system beyond what arrays could achieve.
+ * The program begins by initializing a 2D array to store sample tweet data, where each tweet consists of four attributes: user ID, tweet ID, tweet message, and tweet date. 
+ * Sample tweets are stored in this array, which will serve as input for the hashtag counting. The core functionality is encapsulated within the countHashtags method,
+ * which iterates through each tweet in the array. For each tweet, it retrieves the text of the tweet and splits the words within it using the split method.
 
-/*
- * Algorithm Explanation
-The algorithm begins with a list that will contain tweet data which each entry represents a map
- that stores user ID and tweet ID and tweet text and tweet date. The system fills the list with sample tweets as the first step in its process. 
- The algorithm executes hashtag counting through multiple stages starting from tweet traversal to text word splitting and termination at words starting with #. 
- A map stores hashtags that records their count distribution. The algorithm performs a sort of hashtags based on their count frequency which it
-  maintains in descending order with additional alphabetical sorting for hash tags that have equivalent counts. The program reveals the most popular 
-  hashtags through an organized tabular structure at the end of its process.
+In processing every word, the program checks if a word starts with a # symbol, which in this context indicates that it's a hashtag.
+ If a hashtag is found, the program will increase its value in the HashMap using the put method. Use of the getOrDefault method simplifies the
+  count logic so the program can increment the value if already there, or set to one if encountering the hashtag for the first time.
+
+
+After counting all the hashtags, the application retrieves the top N hashtags using getTopHashtags. The method translates the HashMap
+ entries into a list and sorts it based on the counts in reverse order. In situations where two or more hashtags have the same count, 
+ the sorting is then narrowed down alphabetically to the hashtag name. The list is then sliced to obtain only the top N entries.
+
+Finally, the displayResults function displays the results in a table format with the hashtags and corresponding counts in a
+ user-friendly form. The software therefore effectively showcases the use of basic data structures and string operation manipulation to resolve
+  the issue of hashtag counting and display from tweets.
  */
-
- /*
-  * Code Explanation
-Imports:
-
-The program imports List and Map along with ArrayList as Java utilities to work with collections.
-Class Definition:
-
-This class defines itself as Q4A with both the main method and supporting helper methods.
-Main Method:
-
-This entry program serves as the main method through which the program starts. The createTweet method operates to fill a tweet list with example tweets.
-Counting Hashtags:
-
-The countHashtags method executes a loop operation on each tweet contained in the list. The method procures tweet text from each entry before dividing the content into separate words.
-The program evaluates each word for # characters at its beginning. The hashtag gets added to the HashMap (hashtagCounts) when the key represents the hashtag with a value counting its occurrences.
-Getting Top Hashtags:
-
-The getTopHashtags method turns hashtagCounts into an entry list for sorting purposes.
-The list gets sorted first by count from high to low followed by hashtag name from low to high when counts match.
-The method generates a sublist of hashtags which includes the selected N elements according to the set limit.
-Displaying Results:
-
-The displayResults method organizes the output data into tabular structure. The program displays a header afterward it enumerates the top hashtags while showing their count within a formatted structure.
-The method concludes by printing a footer that finishes the table structure.
-Helper Method:
-
-Everything in the helper function createTweet creates an individual map by adding user ID and tweet ID with tweet text and tweet date to the database before outputting the map.
-  */
-
 
 public class Q4A {
     public static void main(String[] args) {
         // Sample input data: user_id, tweet_id, tweet, tweet_date
-        List<Map<String, String>> tweets = new ArrayList<>();
+        String[][] tweets = new String[7][4]; // Array to hold 7 tweets with 4 attributes each
 
-        // Add sample tweets to the list.
-        tweets.add(createTweet("135", "13", "Enjoying a great start to the day. #HappyDay #MorningVibes", "2024-02-01"));
-        tweets.add(createTweet("136", "14", "Another #HappyDay with good vibes! #FeelGood", "2024-02-03"));
-        tweets.add(createTweet("137", "15", "Productivity peaks! #WorkLife #ProductiveDay", "2024-02-04"));
-        tweets.add(createTweet("138", "16", "Exploring new tech frontiers. #TechLife #Innovation", "2024-02-04"));
-        tweets.add(createTweet("139", "17", "Gratitude for today's moments. #HappyDay #Thankful", "2024-02-05"));
-        tweets.add(createTweet("140", "18", "Innovation drives us. #TechLife #FutureTech", "2024-02-07"));
-        tweets.add(createTweet("141", "19", "Connecting with nature's serenity. #Nature #Peaceful", "2024-02-09"));
+        // Add sample tweets to the array.
+        tweets[0] = new String[]{"135", "13", "Enjoying a great start to the day. #HappyDay #MorningVibes", "2024-02-01"};
+        tweets[1] = new String[]{"136", "14", "Another #HappyDay with good vibes! #FeelGood", "2024-02-03"};
+        tweets[2] = new String[]{"137", "15", "Productivity peaks! #WorkLife #ProductiveDay", "2024-02-04"};
+        tweets[3] = new String[]{"138", "16", "Exploring new tech frontiers. #TechLife #Innovation", "2024-02-04"};
+        tweets[4] = new String[]{"139", "17", "Gratitude for today's moments. #HappyDay #Thankful", "2024-02-05"};
+        tweets[5] = new String[]{"140", "18", "Innovation drives us. #TechLife #FutureTech", "2024-02-07"};
+        tweets[6] = new String[]{"141", "19", "Connecting with nature's serenity. #Nature #Peaceful", "2024-02-09"};
 
         // Count hashtag mentions
         Map<String, Integer> hashtagCounts = countHashtags(tweets);
@@ -64,26 +43,16 @@ public class Q4A {
         displayResults(topHashtags);
     }
 
-    // Method to create a tweet map
-    private static Map<String, String> createTweet(String userId, String tweetId, String tweet, String tweetDate) {
-        Map<String, String> tweetMap = new HashMap<>();
-        tweetMap.put("user_id", userId);
-        tweetMap.put("tweet_id", tweetId);
-        tweetMap.put("tweet", tweet);
-        tweetMap.put("tweet_date", tweetDate);
-        return tweetMap;
-    }
-
     // Method to count hashtags from the tweets
-    private static Map<String, Integer> countHashtags(List<Map<String, String>> tweets) {
+    private static Map<String, Integer> countHashtags(String[][] tweets) {
         Map<String, Integer> hashtagCounts = new HashMap<>();
 
-        for (Map<String, String> tweet : tweets) {
-            String tweetText = tweet.get("tweet");
-            String[] words = tweetText.split(" ");
+        for (String[] tweet : tweets) {
+            String tweetText = tweet[2]; // Get the tweet text
+            String[] words = tweetText.split(" "); // Split the tweet into words
 
             for (String word : words) {
-                if (word.startsWith("#")) {
+                if (word.startsWith("#")) { // Check if the word is a hashtag
                     hashtagCounts.put(word, hashtagCounts.getOrDefault(word, 0) + 1);
                 }
             }
@@ -117,19 +86,25 @@ public class Q4A {
         System.out.println("+-------------+---------+");
     }
 }
+
+//Input:
+//[["135", "13", "Enjoying a great start to the day. #HappyDay #MorningVibes", "2024-02-01"],
+// ["136", "14", "Another #HappyDay with good vibes! #FeelGood", "2024-02-03"], 
+// ["137", "15", "Just had a great #HappyDay with friends! #BestMoments", "2024-02-04"],
+
 // Output:
 // +-------------+---------+
 // |   HASHTAG   |  COUNT  |
 // +-------------+---------+
-// | #HappyDay   | 3       |
-// | #TechLife   | 2       |
-// | #ProductiveDay | 1    |
+// |  HappyDay   |      3  |
+// | MorningVibes|      1  |
+// |   FeelGood  |      1  |
 // +-------------+---------+
 // Expected Output:
 // +-------------+---------+
 // |   HASHTAG   |  COUNT  |
 // +-------------+---------+
-// | #HappyDay   | 3       |
-// | #TechLife   | 2       |
-// | #ProductiveDay | 1    |
+// |  HappyDay   |      3  |
+// | MorningVibes|      1  |
+// |   FeelGood  |      1  |
 // +-------------+---------+
