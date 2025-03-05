@@ -74,92 +74,94 @@ The main method enables the game window creation then inserts the game panel bef
     }
 
     private void generateNewBlock() {
-        currentBlock = Block.getRandomBlock();
+        currentBlock = Block.getRandomBlock(); // Generate a new random block and assign it to the currentBlock variable.
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawBoard(g);
-        drawBlock(g, currentBlock);
+        super.paintComponent(g); // Call the superclass method to clear the panel.
+        drawBoard(g); // Draw the game board on the panel.
+        drawBlock(g, currentBlock); // Draw the current falling block on the panel.
     }
 
     private void drawBoard(Graphics g) {
-        for (int y = 0; y < BOARD_HEIGHT; y++) {
-            for (int x = 0; x < BOARD_WIDTH; x++) {
-                if (board[y][x] != 0) {
-                    g.setColor(Block.COLORS[board[y][x]]);
-                    g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+        for (int y = 0; y < BOARD_HEIGHT; y++) { // Loop through each row of the board.
+            for (int x = 0; x < BOARD_WIDTH; x++) { // Loop through each column of the board.
+                if (board[y][x] != 0) { // Check if the cell is filled (not empty).
+                    g.setColor(Block.COLORS[board[y][x]]); // Set the color based on the block index in the board array.
+                    g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE); // Draw the filled block at the calculated position.
                 }
             }
         }
     }
 
     private void drawBlock(Graphics g, Block block) {
-        g.setColor(block.color);
-        for (int y = 0; y < block.shape.length; y++) {
-            for (int x = 0; x < block.shape[y].length; x++) {
-                if (block.shape[y][x] != 0) {
-                    g.fillRect((block.x + x) * BLOCK_SIZE, (block.y + y) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+        g.setColor(block.color); // Set the color of the current block.
+        for (int y = 0; y < block.shape.length; y++) { // Loop through the block's shape.
+            for (int x = 0; x < block.shape[y].length; x++) { // Loop through each cell in the block shape.
+                if (block.shape[y][x] != 0) { // Check if the cell is part of the block.
+                    // Calculate the position to draw the block based on its coordinates
+                    g.fillRect((block.x + x) * BLOCK_SIZE, (block.y + y) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE); // Draw the block at its current position.
                 }
             }
         }
     }
 
     private void moveBlock(int dx, int dy) {
-        currentBlock.x += dx;
-        currentBlock.y += dy;
-        if (checkCollision()) {
-            currentBlock.x -= dx;
-            currentBlock.y -= dy;
-            if (dy > 0) {
-                mergeBlock();
-                clearRows();
-                generateNewBlock();
+        currentBlock.x += dx; // Update the block's x position based on user input (dx).
+        currentBlock.y += dy; // Update the block's y position based on user input (dy).
+        if (checkCollision()) { // Check for collisions after moving the block.
+            currentBlock.x -= dx; // Revert x position if there's a collision.
+            currentBlock.y -= dy; // Revert y position if there's a collision.
+            if (dy > 0) { // If the block is moving down.
+                mergeBlock(); // Merge the block into the board.
+                clearRows(); // Clear any completed rows.
+                generateNewBlock(); // Generate a new block after the current one has landed.
             }
         }
     }
 
     private boolean checkCollision() {
-        for (int y = 0; y < currentBlock.shape.length; y++) {
-            for (int x = 0; x < currentBlock.shape[y].length; x++) {
-                if (currentBlock.shape[y][x] != 0) {
-                    int newX = currentBlock.x + x;
-                    int newY = currentBlock.y + y;
+        for (int y = 0; y < currentBlock.shape.length; y++) { // Loop through the block's shape.
+            for (int x = 0; x < currentBlock.shape[y].length; x++) { // Loop through each cell in the shape.
+                if (currentBlock.shape[y][x] != 0) { // Check if the cell is part of the block.
+                    int newX = currentBlock.x + x; // Calculate the new x position of the block.
+                    int newY = currentBlock.y + y; // Calculate the new y position of the block.
+                    // Check if the new position is out of bounds or collides with an existing block
                     if (newX < 0 || newX >= BOARD_WIDTH || newY >= BOARD_HEIGHT || board[newY][newX] != 0) {
-                        return true;
+                        return true; // Collision detected; return true.
                     }
                 }
             }
         }
-        return false;
+        return false; // No collision detected; return false.
     }
 
     private void mergeBlock() {
-        for (int y = 0; y < currentBlock.shape.length; y++) {
-            for (int x = 0; x < currentBlock.shape[y].length; x++) {
-                if (currentBlock.shape[y][x] != 0) {
-                    board[currentBlock.y + y][currentBlock.x + x] = currentBlock.colorIndex;
+        for (int y = 0; y < currentBlock.shape.length; y++) { // Loop through the block's shape.
+            for (int x = 0; x < currentBlock.shape[y].length; x++) { // Loop through each cell in the shape.
+                if (currentBlock.shape[y][x] != 0) { // Check if the cell is part of the block.
+                    board[currentBlock.y + y][currentBlock.x + x] = currentBlock.colorIndex; // Merge the block into the board by setting the color index.
                 }
             }
         }
     }
 
     private void clearRows() {
-        for (int y = 0; y < BOARD_HEIGHT; y++) {
-            boolean fullRow = true;
-            for (int x = 0; x < BOARD_WIDTH; x++) {
-                if (board[y][x] == 0) {
-                    fullRow = false;
-                    break;
+        for (int y = 0; y < BOARD_HEIGHT; y++) { // Loop through each row of the board.
+            boolean fullRow = true; // Assume the row is full.
+            for (int x = 0; x < BOARD_WIDTH; x++) { // Loop through each column in the row.
+                if (board[y][x] == 0) { // Check if there's an empty cell.
+                    fullRow = false; // The row is not full.
+                    break; // Exit the loop early.
                 }
             }
-            if (fullRow) {
-                for (int row = y; row > 0; row--) {
-                    System.arraycopy(board[row - 1], 0, board[row], 0, BOARD_WIDTH);
+            if (fullRow) { // If the row is full.
+                for (int row = y; row > 0; row--) { // Shift all rows above down by one.
+                    System.arraycopy(board[row - 1], 0, board[row], 0, BOARD_WIDTH); // Copy the row above into the current row.
                 }
-                for (int x = 0; x < BOARD_WIDTH; x++) {
-                    board[0][x] = 0;
+                for (int x = 0; x < BOARD_WIDTH; x++) { // Clear the top row.
+                    board[0][x] = 0; // Set all cells in the top row to empty.
                 }
             }
         }
@@ -167,69 +169,71 @@ The main method enables the game window creation then inserts the game panel bef
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        moveBlock(0, 1);
-        repaint();
+        moveBlock(0, 1); // Move the current block down by one.
+        repaint(); // Repaint the panel to update the display.
     }
 
-    private class KeyHandler extends KeyAdapter {
+    private class KeyHandler extends KeyAdapter { // Inner class to handle key events.
         @Override
-        public void keyPressed(KeyEvent e) {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_LEFT:
-                    moveBlock(-1, 0);
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    moveBlock(1, 0);
-                    break;
-                case KeyEvent.VK_DOWN:
-                    moveBlock(0, 1);
-                    break;
-                case KeyEvent.VK_UP:
-                    // Rotate block logic can be added here
-                    break;
+        public void keyPressed(KeyEvent e) { // Method called when a key is pressed.
+            switch (e.getKeyCode()) { // Check which key was pressed.
+                case KeyEvent.VK_LEFT: // If the left arrow key is pressed.
+                    moveBlock(-1, 0); // Move the block left.
+                    break; // Exit the switch statement.
+                case KeyEvent.VK_RIGHT: // If the right arrow key is pressed.
+                    moveBlock(1, 0); // Move the block right.
+                    break; // Exit the switch statement.
+                case KeyEvent.VK_DOWN: // If the down arrow key is pressed.
+                    moveBlock(0, 1); // Move the block down.
+                    break; // Exit the switch statement.
+                case KeyEvent.VK_UP: // If the up arrow key is pressed.
+                    // Rotate block logic can be added here (not implemented).
+                    break; // Exit the switch statement.
             }
-            repaint();
+            repaint(); // Repaint the panel to update the display after movement.
         }
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Tetris");
-        Q3B gamePanel = new Q3B();
-        frame.add(gamePanel);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+    public static void main(String[] args) { // Main method to start the game.
+        JFrame frame = new JFrame("Tetris"); // Create a new JFrame with the title "Tetris".
+        Q3B gamePanel = new Q3B(); // Create an instance of the game panel.
+        frame.add(gamePanel); // Add the game panel to the frame.
+        frame.pack(); // Pack the frame to fit the preferred size of the panel.
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set the default close operation.
+        frame.setVisible(true); // Make the frame visible.
     }
 }
 
+// Block class to represent the falling blocks
 class Block {
-    public int[][] shape;
-    public Color color;
-    public int colorIndex;
-    public int x, y;
+    public int[][] shape; // 2D array representing the shape of the block.
+    public Color color; // Color of the block.
+    public int colorIndex; // Index for the color array.
+    public int x, y; // Current position of the block on the board.
 
-    public static final Color[] COLORS = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.CYAN, Color.MAGENTA};
+    public static final Color[] COLORS = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.CYAN, Color.MAGENTA}; // Array of colors for the blocks.
 
+    // Method to get a random block shape
     public static Block getRandomBlock() {
         // Define shapes for different blocks
         int[][][] shapes = {
-            {{1, 1, 1, 1}}, // I
-            {{1, 1, 1}, {0, 1, 0}}, // T
-            {{1, 1}, {1, 1}}, // O
-            {{0, 1, 1}, {1, 1, 0}}, // S
-            {{1, 1, 0}, {0, 1, 1}}, // Z
-            {{1, 1, 1}, {1, 0, 0}}, // L
-            {{1, 1, 1}, {0, 0, 1}}  // J
+            {{1, 1, 1, 1}}, // I shape
+            {{1, 1, 1}, {0, 1, 0}}, // T shape
+            {{1, 1}, {1, 1}}, // O shape
+            {{0, 1, 1}, {1, 1, 0}}, // S shape
+            {{1, 1, 0}, {0, 1, 1}}, // Z shape
+            {{1, 1, 1}, {1, 0, 0}}, // L shape
+            {{1, 1, 1}, {0, 0, 1}}  // J shape
         };
-        Random rand = new Random();
-        int index = rand.nextInt(shapes.length);
-        Block block = new Block();
-        block.shape = shapes[index];
-        block.color = COLORS[index];
-        block.colorIndex = index + 1; // 1-based index for color
-        block.x = 3; // Start position
-        block.y = 0; // Start position
-        return block;
+        Random rand = new Random(); // Create a new Random object for generating random numbers.
+        int index = rand.nextInt(shapes.length); // Get a random index for the shapes array.
+        Block block = new Block(); // Create a new Block instance.
+        block.shape = shapes[index]; // Assign a random shape to the block.
+        block.color = COLORS[index]; // Assign a color based on the shape index.
+        block.colorIndex = index + 1; // Set the color index (1-based for the board).
+        block.x = 3; // Set the initial x position of the block.
+        block.y = 0; // Set the initial y position of the block.
+ return block; // Return the newly created block.
     }
 }
 //input:
